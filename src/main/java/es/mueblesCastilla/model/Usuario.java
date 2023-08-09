@@ -1,7 +1,23 @@
 package es.mueblesCastilla.model;
 
+import java.util.List;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity//entidad
+@Table(name = "usuarios")
 public class Usuario {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)//Para generar autoincrementable
 	private Integer id;
+	@Column(name ="nombreCompleto")//cambiar nombre de campo en la BD.
 	private String nombre;
 	private String username;
 	private String email;
@@ -9,7 +25,12 @@ public class Usuario {
 	private String telefono;
 	private String tipo;
 	private String password;
-
+	
+	@OneToMany(mappedBy = "usuario")//relacion de uno a muchos.
+	private List<Producto> productos;
+	
+	@OneToMany(mappedBy = "usuario")//relacion de uno a muchos.(un usuario puede tener muchas compras)
+	private List<Compra> ordenes;
 	public Usuario() {
 
 	}
@@ -97,5 +118,14 @@ public class Usuario {
 				+ ", direccion=" + direccion + ", telefono=" + telefono + ", tipo=" + tipo + ", password=" + password
 				+ "]";
 	}
+
+	public List<Producto> getProductos() {
+		return productos;
+	}
+
+	public void setProductos(List<Producto> productos) {
+		this.productos = productos;
+	}
+	
 
 }
