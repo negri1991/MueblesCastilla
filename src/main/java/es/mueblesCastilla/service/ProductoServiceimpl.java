@@ -1,5 +1,6 @@
 package es.mueblesCastilla.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,11 @@ public class ProductoServiceimpl implements ProductoService{
 	public void delete(Integer id) {
 		// TODO Auto-generated method stub
 		productoRepository.deleteById(id);
+	}
+
+	@Override
+	public List<Producto> findAll() {
+		return productoRepository.findAll();
 	}
 
 }
