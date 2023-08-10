@@ -1,30 +1,26 @@
 package es.mueblesCastilla.controller;
 
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import es.mueblesCastilla.model.Producto;
 import es.mueblesCastilla.service.ProductoService;
 
 @Controller
-@RequestMapping("/administrador")
-public class AdministradorController {
+@RequestMapping("/")
+public class HomeController {
 	
 	@Autowired
 	private ProductoService productoService; 
 	
 	@GetMapping("")
 	public String home(Model model) {
+		model.addAttribute("productos", productoService.findAll());
 		
-		List<Producto> productos=productoService.findAll();
-		model.addAttribute("productos", productos);
-		return "administrador/home";
+		return "usuario/home";
 	}
+	
 
 }
