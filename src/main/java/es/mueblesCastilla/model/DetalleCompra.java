@@ -35,6 +35,11 @@ public class DetalleCompra {
 		this.total = total;
 	}
 
+	public DetalleCompra() {
+
+	}
+
+
 	public Integer getId() {
 		return id;
 	}
