@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +69,19 @@ public class HomeController {
 		detalleCompra.setNombre(producto.getNombre());
 		detalleCompra.setTotal(producto.getPrecio()*cantidad);
 		detalleCompra.setProducto(producto);
-		detalles.add(detalleCompra);
+		
+		//Validar que el producto no se añada 2 veces
+		
+		Integer idProducto= producto.getId();
+		boolean ingresado=detalles.stream().anyMatch(p -> p.getProducto().getId()==idProducto);
+		
+		if(!ingresado) {
+			detalles.add(detalleCompra);
+		}else {
+			model.addAttribute("productoAgregado", true);
+
+		}
+		
 		
 		sumaTotal=detalles.stream().mapToDouble(dt->dt.getTotal()).sum();
 		compra.setTotal(sumaTotal);
@@ -77,6 +90,39 @@ public class HomeController {
 		
 		return "usuario/carrito";
 		
+	}
+	
+	//QUitar un producto del carrito
+	@GetMapping("/delete/cart/{id}")
+	public String deleteProductoCart(@PathVariable Integer id, Model model) {
+		
+		List<DetalleCompra> comprasNueva = new ArrayList<DetalleCompra>();
+		
+		for(DetalleCompra detalleCompra: detalles) {
+			if(detalleCompra.getProducto().getId()!=id) {
+				comprasNueva.add(detalleCompra);
+				
+			}
+		}
+		//poner la nueva lista con los productos restantes
+		detalles=comprasNueva;
+		double sumaTotal=0;
+		
+		sumaTotal=detalles.stream().mapToDouble(dt->dt.getTotal()).sum();
+		compra.setTotal(sumaTotal);
+		model.addAttribute("cart", detalles);
+		model.addAttribute("Compra", compra);
+		
+		return"usuario/carrito";
+	}
+	
+	@GetMapping("/getCart")
+	public String getCart(Model model) {
+		
+		model.addAttribute("cart", detalles);
+		model.addAttribute("Compra", compra);
+		
+		return "/usuario/carrito";
 	}
 
 }

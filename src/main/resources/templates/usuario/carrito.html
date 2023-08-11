@@ -11,15 +11,24 @@
 
 
   <!-- Bootstrap core CSS -->
-  <link th:href="@{vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+  <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link th:href="@{css/heroic-features.css}" rel="stylesheet">
+  <link th:href="@{/css/heroic-features.css}" rel="stylesheet">
 
 
 </head>
 
 <body>
+	<script th:inline="javascript">
+    /* Obtener el atributo del modelo que indica si el producto fue agregado */
+    var productoAgregado = [[${productoAgregado}]];
+    
+    /* Si el producto fue agregado, mostrar una alerta usando JavaScript */
+    if (productoAgregado) {
+        alert("Error, Producto ya agregado.");
+    }
+</script>
 
   <!-- Navigation -->
   <div th:insert="usuario/template_usuario.html::header"></div>
@@ -58,18 +67,18 @@
                   <td th:text="${dcompra.precio}" ></td>
                   <td th:text="${dcompra.cantidad}" ></td>
                   <td th:text="${dcompra.total}" ></td>
-                  <td><a href="#" class="btn btn-danger">Quitar</a></td>
+                  <td><a th:href="@{/delete/cart/{id} (id=${dcompra.producto.id})}" class="btn btn-danger">Quitar</a></td>
                 </tr>
               </tbody>
             </table>
           </div>
 
           <div class="col-lg-3">
-            <h2 class="card-title">SUBTOTAL</h2>
+            <h2 class="card-title">TOTAL</h2>
 
             <ul class="list-group">
               <li class="list-group-item"><h5 th:text="${Compra.total}"></h5></li>
-              <a href="resumenorden.html" class="btn btn-dark">Ver Orden</a>
+              <a href="resumenorden.html" class="btn btn-dark">Ver Compra</a>
             </ul>
           </div>
 
@@ -84,8 +93,8 @@
     </footer>
 
     <!-- Bootstrap core JavaScript -->
-    <script th:src="@{vendor/jquery/jquery.min.js}"></script>
-	<script th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+	<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
   </body>
 
