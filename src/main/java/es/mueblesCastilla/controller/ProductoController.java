@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import es.mueblesCastilla.model.Producto;
 import es.mueblesCastilla.model.Usuario;
-import es.mueblesCastilla.service.ProductoService;
+import es.mueblesCastilla.service.IProductoService;
 import es.mueblesCastilla.service.UploadFileService;
 
 @Controller
@@ -26,7 +26,7 @@ public class ProductoController {
 	private final Logger LOGGER = LoggerFactory.getLogger(ProductoController.class);
 	
 	@Autowired
-	private ProductoService productoService;
+	private IProductoService productoService;
 	
 	@Autowired
 	private UploadFileService upload;

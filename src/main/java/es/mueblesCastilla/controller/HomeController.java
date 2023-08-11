@@ -1,10 +1,10 @@
 package es.mueblesCastilla.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
-
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,8 +21,10 @@ import es.mueblesCastilla.model.Compra;
 import es.mueblesCastilla.model.DetalleCompra;
 import es.mueblesCastilla.model.Producto;
 import es.mueblesCastilla.model.Usuario;
+import es.mueblesCastilla.service.ICompraService;
+import es.mueblesCastilla.service.IDetalleCompraService;
 import es.mueblesCastilla.service.IUsuarioService;
-import es.mueblesCastilla.service.ProductoService;
+import es.mueblesCastilla.service.IProductoService;
 
 
 @Controller
@@ -32,10 +34,16 @@ public class HomeController {
 	private final Logger log= LoggerFactory.getLogger(HomeController.class);
 	
 	@Autowired
-	private ProductoService productoService; 
+	private IProductoService productoService; 
 	
 	@Autowired
 	private IUsuarioService usuarioService;
+	
+	@Autowired
+	private ICompraService compraService;
+	
+	@Autowired
+	private IDetalleCompraService detalleCompraService;
 	
 	//Para almacenar los detalles del pedido.
 	List<DetalleCompra> detalles=new ArrayList<DetalleCompra>();
@@ -139,6 +147,42 @@ public class HomeController {
 		model.addAttribute("usuario",usuario);
 		
 		return "usuario/resumenFactura";
+	}
+	
+	//Guardar la compra
+	@GetMapping("/saveCompra")
+	public String saveCompra(Model model){
+		
+		Date fechaCreacion = new Date();
+		compra.setFechaCreacion(fechaCreacion);
+		compra.setNumero(compraService.generarNumeroCompra());
+		
+		//usuario
+		Usuario usuario = usuarioService.finById(2).get();
+		compra.setUsuario(usuario);
+		compraService.save(compra);
+		
+		//guardar detalles
+		for (DetalleCompra dt:detalles) {
+			dt.setCompra(compra);
+			detalleCompraService.save(dt);
+		}
+		//limpiar
+		compra =new Compra();
+		detalles.clear();
+		
+		return "redirect:/";
+	}
+	@PostMapping("/search")
+	public String searchProducto(@RequestParam String nombre, Model model) {
+		log.info("Nombre del producto: {}", nombre);
+		//nombre=nombre.toLowerCase();
+		List<Producto> productos = productoService.findAll().stream().filter(p -> p.getNombre().toLowerCase().contains(nombre.toLowerCase()) || p.getNombre().toUpperCase().contains(nombre.toUpperCase())).collect(Collectors.toList());
+		List<Producto> productos2 = productoService.findAll().stream().filter(p -> p.getDescripcion().toLowerCase().contains(nombre.toLowerCase()) || p.getDescripcion().toUpperCase().contains(nombre.toUpperCase())).collect(Collectors.toList());
+		productos.addAll(productos2);
+		model.addAttribute("productos", productos);
+		
+		return "/usuario/home";
 	}
 
 }

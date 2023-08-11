@@ -10,7 +10,7 @@ import es.mueblesCastilla.model.Producto;
 import es.mueblesCastilla.repository.IProductoRepository;
 
 @Service
-public class ProductoServiceimpl implements ProductoService{
+public class ProductoServiceimpl implements IProductoService{
 
 	@Autowired
 	private IProductoRepository productoRepository;
