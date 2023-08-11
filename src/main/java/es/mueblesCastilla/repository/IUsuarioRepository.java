@@ -3,11 +3,9 @@ package es.mueblesCastilla.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import es.mueblesCastilla.model.Producto;
+import es.mueblesCastilla.model.Usuario;
 
 @Repository
-public interface ProductoRepository extends JpaRepository<Producto, Integer>{
-	
-	
+public interface IUsuarioRepository extends JpaRepository<Usuario, Integer> {
 
 }

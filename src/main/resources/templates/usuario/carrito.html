@@ -78,7 +78,7 @@
 
             <ul class="list-group">
               <li class="list-group-item"><h5 th:text="${Compra.total}"></h5></li>
-              <a href="resumenorden.html" class="btn btn-dark">Ver Compra</a>
+              <a th:href="@{/factura}" class="btn btn-dark">Ver Compra</a>
             </ul>
           </div>
 
@@ -89,8 +89,7 @@
 
     <!-- Footer -->
     <div th:insert="usuario/template_usuario.html::footer"></div>
-      <!-- /.container -->
-    </footer>
+ 
 
     <!-- Bootstrap core JavaScript -->
     <script th:src="@{/vendor/jquery/jquery.min.js}"></script>

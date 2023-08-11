@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import es.mueblesCastilla.model.Compra;
 import es.mueblesCastilla.model.DetalleCompra;
 import es.mueblesCastilla.model.Producto;
+import es.mueblesCastilla.model.Usuario;
+import es.mueblesCastilla.service.IUsuarioService;
 import es.mueblesCastilla.service.ProductoService;
 
 
@@ -31,6 +33,9 @@ public class HomeController {
 	
 	@Autowired
 	private ProductoService productoService; 
+	
+	@Autowired
+	private IUsuarioService usuarioService;
 	
 	//Para almacenar los detalles del pedido.
 	List<DetalleCompra> detalles=new ArrayList<DetalleCompra>();
@@ -123,6 +128,17 @@ public class HomeController {
 		model.addAttribute("Compra", compra);
 		
 		return "/usuario/carrito";
+	}
+	@GetMapping("/factura")
+	public String factura(Model model){
+		
+		Usuario usuario = usuarioService.finById(2).get();
+
+		model.addAttribute("cart", detalles);
+		model.addAttribute("Compra", compra);
+		model.addAttribute("usuario",usuario);
+		
+		return "usuario/resumenFactura";
 	}
 
 }
