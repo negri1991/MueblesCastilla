@@ -2,6 +2,12 @@ package es.mueblesCastilla.model;
 
 import java.util.List;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,10 +26,16 @@ public class Usuario {
 	@Column(name ="nombreCompleto")//cambiar nombre de campo en la BD.
 	private String nombre;
 	private String username;
+	@Email
 	private String email;
 	private String direccion;
+	@NotNull(message = "El teléfono no puede estar vacío")
+    @Size(min = 9, max = 9, message = "El teléfono debe tener exactamente 9 dígitos")
+    @Digits(integer = 9, fraction = 0, message = "El teléfono debe ser un número entero")
 	private String telefono;
 	private String tipo;
+	@Size(min = 8, message = " - La contraseña debe tener al menos 8 caracteres.")
+    @Pattern(regexp = "^(?=.*[A-Z])(?=.*\\d).+$", message = " - La contraseña debe contener al menos una letra mayúscula y un número.")
 	private String password;
 	
 	@OneToMany(mappedBy = "usuario")//relacion de uno a muchos.

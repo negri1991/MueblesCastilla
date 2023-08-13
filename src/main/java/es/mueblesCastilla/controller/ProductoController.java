@@ -1,7 +1,9 @@
 package es.mueblesCastilla.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,6 +113,17 @@ public class ProductoController {
 		
 		productoService.delete(id);
 		return "redirect:/productos";
+	}
+	@PostMapping("/search")
+	public String searchProducto(@RequestParam String nombre, Model model) {
+		
+		//nombre=nombre.toLowerCase();
+		List<Producto> productos = productoService.findAll().stream().filter(p -> p.getNombre().toLowerCase().contains(nombre.toLowerCase()) || p.getNombre().toUpperCase().contains(nombre.toUpperCase())).collect(Collectors.toList());
+		List<Producto> productos2 = productoService.findAll().stream().filter(p -> p.getDescripcion().toLowerCase().contains(nombre.toLowerCase()) || p.getDescripcion().toUpperCase().contains(nombre.toUpperCase())).collect(Collectors.toList());
+		productos.addAll(productos2);
+		model.addAttribute("productos", productos);
+		
+		return "/usuario/home";
 	}
 	
 }
