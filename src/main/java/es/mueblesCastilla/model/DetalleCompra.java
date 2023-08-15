@@ -1,10 +1,12 @@
 package es.mueblesCastilla.model;
 
+
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -22,10 +24,12 @@ public class DetalleCompra {
 	private double precio;
 	private double total;
 	
-	@OneToOne
-	private Compra compra;
+	@ManyToOne
+    @JoinColumn(name = "compras_id") // Nombre de la columna que representa la relación
+    private Compra compra;
 	
-	@ManyToOne//Muchos productos a una compra
+	@ManyToOne	
+	@JoinColumn(name = "producto_id")
 	private Producto producto;
 
 	public DetalleCompra(Integer id, String nombre, double cantidad, double precio, double total) {

@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -26,8 +27,9 @@ public class Compra {
 	@ManyToOne//Muchas compras por un usuario.
 	private Usuario usuario;
 	
-	@OneToOne(mappedBy = "compra")
-	private DetalleCompra detalle;
+	@ManyToOne
+	@JoinColumn(name = "compras_id")
+	private Compra compra;
 
 	public Compra() {
 
@@ -96,13 +98,7 @@ public class Compra {
 		this.usuario = usuario;
 	}
 
-	public DetalleCompra getDetalle() {
-		return detalle;
-	}
 
-	public void setDetalle(DetalleCompra detalle) {
-		this.detalle = detalle;
-	}
 	
 
 }

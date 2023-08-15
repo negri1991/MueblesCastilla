@@ -24,6 +24,7 @@ import es.mueblesCastilla.model.Usuario;
 import es.mueblesCastilla.service.ICompraService;
 import es.mueblesCastilla.service.IDetalleCompraService;
 import es.mueblesCastilla.service.IUsuarioService;
+import jakarta.servlet.http.HttpSession;
 import es.mueblesCastilla.service.IProductoService;
 
 
@@ -50,9 +51,14 @@ public class HomeController {
 
 	Compra compra = new Compra();
 	@GetMapping("")
-	public String home(Model model) {
+	public String home(Model model, HttpSession session) {
+		log.info("sesion del usuario: {}", session.getAttribute("idUsuario"));
 		model.addAttribute("productos", productoService.findAll());
+
 		
+		//session
+		model.addAttribute("sesion", session.getAttribute("idUsuario"));
+		model.addAttribute("sesionNombre", session.getAttribute("idNombre"));
 		return "usuario/home";
 	}
 	
@@ -130,35 +136,45 @@ public class HomeController {
 	}
 	
 	@GetMapping("/getCart")
-	public String getCart(Model model) {
+	public String getCart(Model model, HttpSession session) {
+		//session
+		model.addAttribute("sesion", session.getAttribute("idUsuario"));
+		model.addAttribute("sesionNombre", session.getAttribute("idNombre"));
+		
 		
 		model.addAttribute("cart", detalles);
 		model.addAttribute("Compra", compra);
 		
+	
 		return "/usuario/carrito";
 	}
 	@GetMapping("/factura")
-	public String factura(Model model){
+	public String factura(Model model, HttpSession session){
 		
-		Usuario usuario = usuarioService.finById(2).get();
+		Usuario usuario = usuarioService.finById(Integer.parseInt(session.getAttribute("idUsuario").toString())).get();
 
 		model.addAttribute("cart", detalles);
 		model.addAttribute("Compra", compra);
 		model.addAttribute("usuario",usuario);
-		
+		if(detalles.isEmpty()) {
+			System.out.print("Archivo null");
+			
+			return "redirect:/productos";
+		}else {
 		return "usuario/resumenFactura";
+		}
 	}
 	
 	//Guardar la compra
 	@GetMapping("/saveCompra")
-	public String saveCompra(Model model){
+	public String saveCompra( HttpSession session){
 		
 		Date fechaCreacion = new Date();
 		compra.setFechaCreacion(fechaCreacion);
 		compra.setNumero(compraService.generarNumeroCompra());
 		
 		//usuario
-		Usuario usuario = usuarioService.finById(2).get();
+		Usuario usuario = usuarioService.finById(Integer.parseInt(session.getAttribute("idUsuario").toString())).get();
 		compra.setUsuario(usuario);
 		compraService.save(compra);
 		
