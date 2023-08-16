@@ -1,134 +1,139 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
 
-  <title>Muebles Castilla</title>
+	<title>Muebles Castilla</title>
 
 
- <!-- Bootstrap core CSS -->
-  <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+	<!-- Bootstrap core CSS -->
+	<link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
 
-  <!-- Custom styles for this template -->
-  <link th:href="@{/css/heroic-features.css}" rel="stylesheet">
+	<!-- Custom styles for this template -->
+	<link th:href="@{/css/heroic-features.css}" rel="stylesheet">
 
 </head>
 
 <body>
 
-  <!-- Navigation Usuario registrador -->
-<div th:fragment="header-user">
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-		<div class="container">
-			<a class="navbar-brand" th:href="@{/}">Muebles Castilla, &nbsp &nbsp Hola <span th:text="${usuario.nombre}"></span></a>
+	<!-- Navigation Usuario registrador -->
+	<div th:fragment="header-user">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+			<div class="container">
+				<a class="navbar-brand" th:href="@{/}">Muebles Castilla, &nbsp &nbsp Hola <span
+						th:text="${usuario.nombre}"></span></a>
 
-			<form class="form-inline my-2 my-lg-0" method="post" th:action="@{/search}">
-				<input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" name="nombre"
-					autocomplete="off">
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-			</form>
+				<form class="form-inline my-2 my-lg-0" method="post" th:action="@{/search}">
+					<input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search"
+						name="nombre" autocomplete="off">
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+				</form>
 
 
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-				aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarResponsive">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item dropdown"><a
-							class="nav-link dropdown-toggle" href="#"
-							id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
-							aria-haspopup="true" aria-expanded="false"> <span th:text="${usuario.nombre}"></span></a>
-							<div class="dropdown-menu"
-								aria-labelledby="navbarDropdownMenuLink">
-								<a class="dropdown-item" th:href="@{/getCart}">Carrito</a> 
-							</div></li>
-				</ul>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+					aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarResponsive">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#"
+								id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false"> <span th:text="${usuario.nombre}"></span></a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+								<a class="dropdown-item" th:href="@{/getCart}">Carrito</a>
+								<a class="dropdown-item" th:href="@{/usuario/compras}">Compras</a>
+								<a class="dropdown-item" th:href="@{/usuario/cerrar}">Cerrar Sesión</a>
+							</div>
+						</li>
+					</ul>
+				</div>
 			</div>
-		</div>
-	</nav>
-</div>
+		</nav>
+	</div>
 	<!-- unless quiere decir si no es null haz esto -->
 
-    <!-- Page Content -->
-    <div class="container">
+	<!-- Page Content -->
+	<div class="container">
 
-<br><br>
-      <!-- Page Heading/Breadcrumbs -->
-      <h1 class="mt-4 mb-3">
-       Muebles Castilla <small>Resumen de la compra</small>
-      </h1>
+		<br><br>
+		<!-- Page Heading/Breadcrumbs -->
+		<h1 class="mt-4 mb-3">
+			Muebles Castilla <small>Resumen de la compra</small>
+		</h1>
 
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
-        <li class="breadcrumb-item active">Compra</li>
-      </ol>
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+			<li class="breadcrumb-item active">Compra</li>
+		</ol>
 
-      <!-- Blog Post -->
-      <div class="card mb-4">
-        <div class="card-body">
-          <div class="row">
-           <div class="col-lg-9">
-             <div class="card-body">
-              <h5 class="card-title">
-                DATOS CLIENTE
-              </h5>
-              <h6 th:text=" 'Nombre:  ' +${usuario.nombre}"> </h6>
-              <h6 th:text="'Correo:  '+ ${usuario.email}"> </h6>
-              <h6 th:text="'Direccion:  '+${usuario.direccion}"></h6>
+		<!-- Blog Post -->
+		<div class="card mb-4">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-lg-9">
+						<div class="card-body">
+							<h5 class="card-title">
+								DATOS CLIENTE
+							</h5>
+							<h6 th:text=" 'Nombre:  ' +${usuario.nombre}"> </h6>
+							<h6 th:text="'Correo:  '+ ${usuario.email}"> </h6>
+							<h6 th:text="'Direccion:  '+${usuario.direccion}"></h6>
 
-              <h5 class="card-title">
-                PRODUCTOS
-              </h5>
-              <div class="alert alert-light" role="alert">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">Producto</th>
-                      <th scope="col">Precio</th>
-                      <th scope="col">Cantidad</th>
-                      <th scope="col">Total</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr th:each="dorden:${cart}">
-                     <td th:text="${dorden.nombre}"></td>
-                     <td th:text="${dorden.precio}"></td>
-                     <td th:text="${dorden.cantidad}"></td>
-                     <td th:text="${dorden.total}"></td>
+							<h5 class="card-title">
+								PRODUCTOS
+							</h5>
+							<div class="alert alert-light" role="alert">
+								<table class="table">
+									<thead>
+										<tr>
+											<th scope="col">Producto</th>
+											<th scope="col">Precio</th>
+											<th scope="col">Cantidad</th>
+											<th scope="col">Total</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="dorden:${cart}">
+											<td th:text="${dorden.nombre}"></td>
+											<td th:text="${dorden.precio}"></td>
+											<td th:text="${dorden.cantidad}"></td>
+											<td th:text="${dorden.total}"></td>
 
-                   </tr>
-                 </tbody>
-               </table>
-             </div>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 
-           </div>
-         </div>
+						</div>
+					</div>
 
 
-         <div class="col-lg-3">
-          <h2 class="card-title">Resumen Compra</h2>
+					<div class="col-lg-3">
+						<h2 class="card-title">Resumen Compra</h2>
 
-          <ul class="list-group">
-            <li class="list-group-item"><h5 th:text=" 'Total: '+ ${Compra.total}"></h5></li>
-            <a th:href="@{/saveCompra}" class="btn btn-dark">Generar</a>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- /.container -->
+						<ul class="list-group">
+							<li class="list-group-item">
+								<h5 th:text=" 'Total: '+ ${Compra.total}"></h5>
+							</li>
+							<a th:href="@{/saveCompra}" class="btn btn-dark">Generar</a>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /.container -->
 
-  <!-- Footer -->
-<div th:insert="usuario/template_usuario.html::footer"></div>
+		<!-- Footer -->
+		<div th:insert="usuario/template_usuario.html::footer"></div>
 
-  <!-- Bootstrap core JavaScript -->
-    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-	<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+		<!-- Bootstrap core JavaScript -->
+		<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+		<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
 </body>
 
 </html>

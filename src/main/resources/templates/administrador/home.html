@@ -30,7 +30,12 @@
 		<!-- Jumbotron Header -->
 		<header class="jumbotron my-4">
 			<h1 class="display-3">Muebles Castilla</h1>
-			<p class="lead">Tu tienda de productos en Línea</p>
+			<p class="lead">Tu tienda de productos en Línea</p><br>
+			<div class="card-footer d-flex justify-content-center">
+						<a th:href="@{/productos/create}" class="btn btn-success">Añadir productos</a>
+						<a th:href="@{/productos}" class="btn btn-success mx-2">Productos</a>
+			</div>
+			
 		</header>
 
 		<!-- Page Features -->
@@ -41,10 +46,9 @@
 					<img class="card-img-top" th:src="@{/images/{img} (img=${producto.imagen})}" alt="">
 					<div class="card-body">
 						<p class="card-text" th:text="${producto.nombre}"></p>
+						<p class="card-text" th:text="${producto.descripcion}"></p>
 					</div>
-					<div class="card-footer">
-						<a href="productohome.html" class="btn btn-success">Ver producto</a>
-					</div>
+					
 				</div>
 			</div>
 
