@@ -15,27 +15,25 @@
 
   <!-- Custom styles for this template -->
   <link th:href="@{/css/heroic-features.css}" rel="stylesheet">
-
+	<!-- CSS para la ventana emergente del carrit -->
+	<link rel="stylesheet" th:href="@{/css/styles.css}" />
 
 </head>
 
 <body>
-	<script th:inline="javascript">
-    /* Obtener el atributo del modelo que indica si el producto fue agregado */
-    var productoAgregado = [[${productoAgregado}]];
-    
-    /* Si el producto fue agregado, mostrar una alerta usando JavaScript */
-    if (productoAgregado) {
-        alert("Se ha producido un error: el producto ya está en el carrito. Si deseas agregar más unidades, primero elimínalo del carrito y luego vuelve a añadirlo, seleccionando la cantidad deseada. ");
-    }
-</script>
+	<div th:block class="aviso" th:if="${productoAgregado}">
+		<br><br><br>
+		<p>¡Error! 
+Producto ya agregado al carrito. Si deseas agregar más unidades, puedes quitarlo y volver a añadirlo con la cantidad deseada. ¡Gracias!</p>
+		<button id="cerrarAviso">Cerrar</button>
+	</div>
 
  <div th:insert="usuario/template_usuario.html::header" th:if="${sesion==null}"></div>
   <div th:insert="usuario/template_usuario.html::header-user" th:unless="${sesion==null}"></div><!-- unless quiere decir si no es null haz esto -->
     <!-- Page Content -->
     <div class="container">
 
-<br>
+<br><br>
       <!-- Page Heading/Breadcrumbs -->
       <h1 class="mt-4 mb-3">
         Muebles Castilla <small>Carrito</small>
@@ -94,7 +92,7 @@
     <!-- Bootstrap core JavaScript -->
     <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
 	<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-
+	<script th:src="@{/js/scriptCarritoHome.js}"></script>
   </body>
 
   </html>

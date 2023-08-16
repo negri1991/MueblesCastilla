@@ -45,6 +45,7 @@ public class HomeController {
 	
 	@Autowired
 	private IDetalleCompraService detalleCompraService;
+
 	
 	//Para almacenar los detalles del pedido.
 	List<DetalleCompra> detalles=new ArrayList<DetalleCompra>();
@@ -150,16 +151,15 @@ public class HomeController {
 	}
 	@GetMapping("/factura")
 	public String factura(Model model, HttpSession session){
-		
+
 		Usuario usuario = usuarioService.finById(Integer.parseInt(session.getAttribute("idUsuario").toString())).get();
 
 		model.addAttribute("cart", detalles);
 		model.addAttribute("Compra", compra);
 		model.addAttribute("usuario",usuario);
-		if(detalles.isEmpty()) {
-			System.out.print("Archivo null");
+		if(detalles.isEmpty()) {			
+			return "redirect:/home2";
 			
-			return "redirect:/productos";
 		}else {
 		return "usuario/resumenFactura";
 		}
@@ -168,6 +168,7 @@ public class HomeController {
 	//Guardar la compra
 	@GetMapping("/saveCompra")
 	public String saveCompra( HttpSession session){
+	
 		
 		Date fechaCreacion = new Date();
 		compra.setFechaCreacion(fechaCreacion);
@@ -187,6 +188,8 @@ public class HomeController {
 		compra =new Compra();
 		detalles.clear();
 		
+		
+		
 		return "redirect:/";
 	}
 	@PostMapping("/search")
@@ -200,5 +203,20 @@ public class HomeController {
 		
 		return "/usuario/home";
 	}
+	@GetMapping("/home2")
+	public String home2(Model model, HttpSession session) {
+		//carrito vacio
+		boolean carritoVacio;
+		carritoVacio=true;
+		model.addAttribute("carritoVacio", carritoVacio);
+		
+		//Session
+		model.addAttribute("sesion", session.getAttribute("idUsuario"));
+		model.addAttribute("sesionNombre", session.getAttribute("idNombre"));
 
+		//Productos
+		model.addAttribute("productos", productoService.findAll());
+			return "usuario/home2";
+
+	}
 }

@@ -1,0 +1,20 @@
+.aviso {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f3f3f3;
+    padding: 10px;
+    text-align: center;
+}
+
+.aviso p {
+    font-size: 18px;
+    color: rgb(255, 0, 0);
+    margin: 0;
+}
+
+.aviso button {
+    margin-top: 10px;
+}

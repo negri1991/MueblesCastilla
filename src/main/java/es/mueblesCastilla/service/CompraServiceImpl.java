@@ -2,11 +2,13 @@ package es.mueblesCastilla.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import es.mueblesCastilla.model.Compra;
+import es.mueblesCastilla.model.Usuario;
 import es.mueblesCastilla.repository.ICompraRepository;
 
 @Service
@@ -50,6 +52,18 @@ public class CompraServiceImpl implements ICompraService{
 			numeroConcatenado="0000000"+String.valueOf(numero);
 		}
 		return numeroConcatenado;
+	}
+
+	@Override
+	public List<Compra> findByUsuario(Usuario usuario) {
+		return compraRepository.findByUsuario(usuario);
+	
+	}
+
+	@Override
+	public Optional<Compra> findById(Integer id) {
+		
+		return compraRepository.findById(id);
 	}
 
 }

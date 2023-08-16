@@ -16,7 +16,8 @@
 
 	<!-- Custom styles for this template -->
 	<link th:href="@{/css/heroic-features.css}" rel="stylesheet">
-
+	<!-- CSS para la ventana emergente del carrit -->
+	<link rel="stylesheet" th:href="@{/css/styles.css}" />
 
 </head>
 
@@ -24,12 +25,18 @@
 		<!-- Bootstrap core JavaScript -->
 	<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
 	<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-	
+	<script th:src="@{/js/scriptCarritoHome.js}"></script>
 
 	<!-- Navigation -->
 	<div th:block th:include="/usuario/template_usuario.html::header" th:if="${sesion==null}"></div>
 	<div th:block th:include="/usuario/template_usuario.html::header-user" th:unless="${sesion==null}"></div>
 	<!-- unless quiere decir si no es null haz esto -->
+	<!-- Script emergente para avisarte que no tenias nada en el carrito -->s
+	<div th:block class="aviso" th:if="${carritoVacio}">
+		<br><br><br><br><br>
+		<p>¡Error! No has selecionado ningún producto.</p>
+		<button id="cerrarAviso">Cerrar</button>
+	</div>
 
 	<!-- Page Content -->
 	<div class="container">

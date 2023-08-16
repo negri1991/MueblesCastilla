@@ -1,6 +1,7 @@
 package es.mueblesCastilla.model;
 
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,7 +9,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
+
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,9 +29,8 @@ public class Compra {
 	@ManyToOne//Muchas compras por un usuario.
 	private Usuario usuario;
 	
-	@ManyToOne
-	@JoinColumn(name = "compras_id")
-	private Compra compra;
+	@OneToMany(mappedBy = "compra")
+	private List<DetalleCompra> detalle;
 
 	public Compra() {
 
@@ -96,6 +97,14 @@ public class Compra {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public List<DetalleCompra> getDetalle() {
+		return detalle;
+	}
+
+	public void setDetalle(List<DetalleCompra> detalle) {
+		this.detalle = detalle;
 	}
 
 
