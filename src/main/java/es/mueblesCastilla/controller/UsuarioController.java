@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,6 +36,8 @@ public class UsuarioController {
 	
 	@Autowired
 	private ICompraService compraService;
+	
+	BCryptPasswordEncoder passEncode = new BCryptPasswordEncoder();
 
 	// usuario/registro
 	@GetMapping("/registro")
@@ -46,7 +49,8 @@ public class UsuarioController {
 	@PostMapping("/save")
 	public String save(@Valid @ModelAttribute("elUsuario") Usuario usuario, BindingResult validacionResultado) {
 
-		usuario.setTipo("USER");
+		usuario.setTipo("ADMIN");
+		usuario.setPassword(passEncode.encode(usuario.getPassword()));
 		usuarioService.save(usuario);
 
 		return "redirect:/";
